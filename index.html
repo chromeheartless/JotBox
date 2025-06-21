@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JotBox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="logo.png" type="image/x-icon" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.4s, color 0.4s;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 10;
+      animation: fadeInFromTop 1s ease-out forwards;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: white;
+      text-shadow: 0 0 1px white;
+    }
+
+    .page-container {
+      flex: 1;
+      padding: 120px 20px 40px;
+      max-width: 700px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero, .form-container {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: white;
+      animation: fadeSlideIn 1s ease-out forwards;
+    }
+
+    .subtitle {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      margin: 0 0 1rem;
+      color: white;
+      animation: fadeSlideIn 1s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    .description {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255 255 255 / 0.8);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      animation: fadeSlideIn 1s ease-out forwards;
+      animation-delay: 0.6s;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeSlideIn 1s ease-out forwards;
+      animation-delay: 0.9s;
+    }
+
+    .hero-buttons button,
+    .hero-buttons a {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      min-width: 140px;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      transition: background-color 0.3s;
+      display: inline-block;
+      line-height: 1.2;
+    }
+
+    .get-started {
+      background-color: white;
+      color: black;
+    }
+
+    .get-started:hover {
+      background-color: #d6faff;
+    }
+
+    .wiki-btn {
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .wiki-btn:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .form-container {
+      display: none;
+      background-color: rgba(255 255 255 / 0.06);
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0 0 0 / 0.2);
+      animation-fill-mode: forwards;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .back-btn {
+      align-self: flex-start;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      text-decoration: underline;
+    }
+
+    .form-container h2 {
+      color: white;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-container form {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-container input::placeholder {
+      color: #888;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .button-group button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      min-width: 110px;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s;
+      color: white;
+      background-color: transparent;
+      border: 2px solid white;
+      line-height: 1.2;
+    }
+
+    .signup-btn {
+      background-color: #833AB4;
+      color: white;
+      border: none;
+      min-width: 130px;
+    }
+
+    .signup-btn:hover {
+      background-color: #9626c1;
+    }
+
+    .login-btn:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .footer {
+      font-family: Consolas, monospace;
+      text-align: center;
+      padding: 1rem 0;
+      color: white;
+      animation: fadeInFromTop 1s ease-out forwards;
+      margin-top: auto;
+      background: transparent;
+      user-select: none;
+      width: 100%;
+      max-width: 700px;
+      box-sizing: border-box;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInFromTop {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUpHide {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+    }
+
+    @keyframes slideUpShow {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-container {
+        padding: 120px 15px 30px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .button-group {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .button-group button {
+        width: 100%;
+        min-width: auto;
+      }
+
+      .hero-buttons button,
+      .hero-buttons a {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="header">
+    <div class="logo-container">
+      <img src="logo.png" alt="JotBox Logo" width="50" height="40" />
+      <span class="brand">JotBox</span>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <section class="hero" id="hero">
+      <h1 class="title">Modern Notes App</h1>
+      <h2 class="subtitle">With the Looks</h2>
+      <p class="description">JotBox is a simple, intuitive notes app made by students, for students.</p>
+      <div class="hero-buttons">
+        <button class="get-started" id="getStartedBtn">Get Started</button>
+        <a href="https://github.com/chromeheartless/JotBox" target="_blank" rel="noopener noreferrer" class="wiki-btn">Read Docs</a>
+      </div>
+    </section>
+
+    <section class="form-container" id="form">
+      <button class="back-btn" id="backBtn">← Back</button>
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <div class="button-group">
+          <button type="submit" class="login-btn">Login</button>
+          <button type="submit" class="signup-btn">Sign Up</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 JotBox under the GPL-3.0 license</p>
+  </footer>
+
+  <script>
+    const hero = document.getElementById('hero');
+    const form = document.getElementById('form');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const backBtn = document.getElementById('backBtn');
+    const signupForm = document.getElementById('signupForm');
+
+    getStartedBtn.addEventListener('click', () => {
+      hero.style.animation = 'slideUpHide 0.5s forwards';
+      setTimeout(() => {
+        hero.style.display = 'none';
+        form.style.display = 'flex';
+        form.style.animation = 'slideUpShow 0.5s forwards';
+      }, 500);
+    });
+
+    backBtn.addEventListener('click', () => {
+      form.style.animation = 'slideUpHide 0.5s forwards';
+      setTimeout(() => {
+        form.style.display = 'none';
+        hero.style.display = 'flex';
+        hero.style.animation = 'slideUpShow 0.5s forwards';
+      }, 500);
+    });
+
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Form submitted');
+    });
+  </script>
+</body>
+</html>
