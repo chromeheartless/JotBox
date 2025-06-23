@@ -54,7 +54,7 @@
     }
 
     .page-container {
-      flex: 1;
+      flex: 1 1 auto;
       padding: 120px 20px 40px;
       max-width: 700px;
       width: 100%;
@@ -62,6 +62,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-height: 0; /* Allow shrinking */
     }
 
     .hero, .form-container {
@@ -247,15 +248,32 @@
     .footer {
       font-family: Consolas, monospace;
       text-align: center;
-      padding: 1rem 0;
+      padding: clamp(0.5rem, 2vw, 1.5rem) 0;
       color: white;
       animation: fadeInFromTop 1s ease-out forwards;
       margin-top: auto;
       background: transparent;
       user-select: none;
       width: 100%;
-      max-width: 700px;
+      max-width: 100vw;
       box-sizing: border-box;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+    }
+
+    #hero, #form {
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .title, .subtitle, .description, .hero-buttons {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .animate-in {
+      animation: fadeSlideIn 1s ease-out forwards;
+      opacity: 1;
+      pointer-events: auto;
     }
 
     @keyframes fadeSlideIn {
@@ -385,18 +403,26 @@
 
     getStartedBtn.addEventListener('click', () => {
       hero.style.animation = 'slideUpHide 0.5s forwards';
+      hero.style.pointerEvents = 'none';
       setTimeout(() => {
+        hero.style.visibility = 'hidden';
         hero.style.display = 'none';
         form.style.display = 'flex';
+        form.style.visibility = 'visible';
+        form.style.pointerEvents = 'auto';
         form.style.animation = 'slideUpShow 0.5s forwards';
       }, 500);
     });
 
     backBtn.addEventListener('click', () => {
       form.style.animation = 'slideUpHide 0.5s forwards';
+      form.style.pointerEvents = 'none';
       setTimeout(() => {
+        form.style.visibility = 'hidden';
         form.style.display = 'none';
         hero.style.display = 'flex';
+        hero.style.visibility = 'visible';
+        hero.style.pointerEvents = 'auto';
         hero.style.animation = 'slideUpShow 0.5s forwards';
       }, 500);
     });
@@ -404,6 +430,22 @@
     signupForm.addEventListener('submit', e => {
       e.preventDefault();
       alert('Form submitted');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const title = document.querySelector('.title');
+      const subtitle = document.querySelector('.subtitle');
+      const description = document.querySelector('.description');
+
+      setTimeout(() => {
+        title.classList.add('animate-in');
+        setTimeout(() => {
+          subtitle.classList.add('animate-in');
+          setTimeout(() => {
+            description.classList.add('animate-in');
+          }, 300); // delay for description
+        }, 1000); // delay for subtitle
+      }, 200); // initial delay for title
     });
   </script>
 </body>
