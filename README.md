@@ -1,5 +1,9 @@
 # JotBox
 
+![JotBox Logo](logo.png)
+
+# 
+
 JotBox is a modern, student-built note-taking application created entirely from scratch using HTML, CSS, JavaScript, and Python. This project is not based on any major libraries or front-end frameworks, making it lightweight, customizable, and a perfect learning opportunity. It is currently under development as part of my Personal Project for the final year of the IB MYP (Middle Years Programme).
 
 The goal of JotBox is to provide a clean, simple, and intuitive user experience that is visually appealing and functional. It is designed with students in mind, offering a distraction-free way to create, manage, and store notes efficiently. I plan to complete and release the minimum viable product (MVP) by the end of summer.
