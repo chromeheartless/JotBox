@@ -13,7 +13,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: "Jetbrains Mono";
       background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
       color: white;
       display: flex;
@@ -85,7 +85,7 @@
       animation: fadeSlideIn 1s ease-out forwards;
     }
 
-    .subtitle {
+    .subtitle, .subtitle2 {
       font-size: clamp(2rem, 5vw, 4rem);
       font-weight: 700;
       margin: 0 0 1rem;
@@ -93,6 +93,14 @@
       animation: fadeSlideIn 1s ease-out forwards;
       animation-delay: 0.3s;
     }
+
+    
+    .subtitle-container {
+      display: flex; /* Use flexbox to align items */
+      align-items: center; /* Center items vertically */
+      white-space: nowrap; /* Prevent text from wrapping */
+    }
+
 
     .description {
       font-size: clamp(1rem, 2vw, 1.2rem);
@@ -120,7 +128,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      font-family: "Jetbrains Mono";
       border: none;
       min-width: 140px;
       text-align: center;
@@ -172,7 +180,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: "Jetbrains Mono";
       text-decoration: underline;
     }
 
@@ -197,7 +205,7 @@
       border: none;
       border-radius: 8px;
       font-size: 1rem;
-      font-family: 'Inter', sans-serif;
+      font-family: "Jetbrains Mono";
     }
 
     .form-container input::placeholder {
@@ -218,7 +226,7 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: "Jetbrains Mono";
       border: none;
       min-width: 110px;
       text-align: center;
@@ -247,7 +255,7 @@
     }
 
     .footer {
-      font-family: Consolas, monospace;
+      font-family: "Jetbrains Mono";
       text-align: center;
       padding: clamp(0.5rem, 2vw, 1.5rem) 0;
       color: white;
@@ -273,10 +281,11 @@
       pointer-events: auto;
     }
 
-    .title, .subtitle, .description, .hero-buttons {
+    .title, .subtitle, .subtitle2, .description, .hero-buttons {
       opacity: 0;
       pointer-events: none;
     }
+
 
     .animate-in {
       animation: fadeSlideIn 1s ease-out forwards;
@@ -387,7 +396,10 @@
   <div class="page-container">
     <section class="hero" id="hero">
       <h1 class="title">Modern Notes App</h1>
-      <h2 class="subtitle">With the Looks</h2>
+      <div class="subtitle-container">
+        <h2 class="subtitle">With the&nbsp;</h2>
+        <h2 class="subtitle2"></h2>
+      </div>
       <p class="description">JotBox is a simple, intuitive notes app made by students, for students.</p>
       <div class="hero-buttons">
         <button class="get-started" id="getStartedBtn">Get Started</button>
@@ -419,6 +431,59 @@
     const getStartedBtn = document.getElementById('getStartedBtn');
     const backBtn = document.getElementById('backBtn');
     const signupForm = document.getElementById('signupForm');
+
+    const textElement = document.querySelector('.subtitle2');
+    const phrases = [
+      "looks.",
+      "feel.",
+      "style.",
+      "functionality.",
+      "ease.",
+      "simplicity.",
+      "creativity.",
+      "efficiency.",
+      "innovation.",
+      "clarity.",
+      "flexibility.",
+      "intuitiveness.",
+      "accessibility.",
+      "organization.",
+      "productivity.",
+      "customization.",
+      "collaboration.",
+      "inspiration.",
+      "versatility.",
+      "performance."
+    ];
+    let currentPhraseIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+
+
+    function type() {
+        const currentPhrase = phrases[currentPhraseIndex];
+        const typedText = currentPhrase.slice(0, currentCharIndex);
+        textElement.innerHTML = typedText + '<span class="cursor">_</span>'; // Add underscore
+
+        if (isDeleting) {
+            currentCharIndex--;
+            if (currentCharIndex < 0) {
+                isDeleting = false;
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                currentCharIndex = 0;
+            }
+        } else {
+            currentCharIndex++;
+            if (currentCharIndex === currentPhrase.length) {
+                isDeleting = true;
+            }
+        }
+
+        const typingSpeed = isDeleting ? 300 : 200; // Adjust speed here
+        setTimeout(type, typingSpeed);
+    }
+
+type();
 
     getStartedBtn.addEventListener('click', () => {
       hero.style.animation = 'slideUpHide 0.5s forwards';
@@ -454,6 +519,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       const title = document.querySelector('.title');
       const subtitle = document.querySelector('.subtitle');
+      const subtitle2 = document.querySelector('.subtitle2');
       const description = document.querySelector('.description');
       const heroButtons = document.querySelector('.hero-buttons');
       const footer = document.querySelector('.footer');
@@ -462,6 +528,7 @@
         title.classList.add('animate-in');
         setTimeout(() => {
           subtitle.classList.add('animate-in');
+          subtitle2.classList.add('animate-in');
           setTimeout(() => {
             description.classList.add('animate-in');
             setTimeout(() => {
@@ -474,6 +541,8 @@
         }, 1000); // delay for subtitle
       }, 100); // initial delay for title
     });
+
+    type()
   </script>
 </body>
 </html>
