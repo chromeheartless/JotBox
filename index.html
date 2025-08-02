@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JotBox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" href="logo.png" type="image/x-icon" />
   <style>
     * {
@@ -459,30 +460,28 @@
     let isDeleting = false;
 
 
-    function type() {
-        const currentPhrase = phrases[currentPhraseIndex];
-        const typedText = currentPhrase.slice(0, currentCharIndex);
-        textElement.innerHTML = typedText + '<span class="cursor">_</span>'; // Add underscore
+function type() {
+    const currentPhrase = phrases[currentPhraseIndex];
+    const typedText = currentPhrase.slice(0, currentCharIndex);
+    textElement.innerHTML = typedText + '<span class="cursor">_</span>'; // Add underscore
 
-        if (isDeleting) {
-            currentCharIndex--;
-            if (currentCharIndex < 0) {
-                isDeleting = false;
-                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                currentCharIndex = 0;
-            }
-        } else {
-            currentCharIndex++;
-            if (currentCharIndex === currentPhrase.length) {
-                isDeleting = true;
-            }
+    if (isDeleting) {
+        currentCharIndex--;
+        if (currentCharIndex < 0) {
+            isDeleting = false;
+            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            currentCharIndex = 0;
         }
-
-        const typingSpeed = isDeleting ? 300 : 200; // Adjust speed here
-        setTimeout(type, typingSpeed);
+    } else {
+        currentCharIndex++;
+        if (currentCharIndex === currentPhrase.length) {
+            isDeleting = true;
+        }
     }
 
-type();
+    const typingSpeed = isDeleting ? 200 : 200; // Adjust speed here
+    setTimeout(type, typingSpeed);
+}
 
     getStartedBtn.addEventListener('click', () => {
       hero.style.animation = 'slideUpHide 0.5s forwards';
