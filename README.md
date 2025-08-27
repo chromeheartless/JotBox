@@ -8,22 +8,6 @@ JotBox is a modern, student-built note-taking application created entirely from 
 
 The goal of JotBox is to provide a clean, simple, and intuitive user experience that is visually appealing and functional. It is designed with students in mind, offering a distraction-free way to create, manage, and store notes efficiently. I plan to complete and release the minimum viable product (MVP) by the end of summer.
 
-# Current Progress
-
-At this stage, JotBox includes a visually polished landing page with smooth animations and transitions between sections. The front page includes an animated header, a brief introduction to the app, and a form for user login and sign-up. While the HTML, CSS, and JavaScript for the front end are actively being developed, the backend is still in its early stages and will be built using Python.
-
-Planned Features:
-
-- User authentication (sign up and login functionality)
-- Google Calendar and Classroom syncronisation
-- (Maybe) Google Authentication
-- Note creation, editing, and deletion
-- Responsive design for desktop and mobile devices
-- Dark mode toggle
-- Markdown support for formatting notes
-- Local storage for offline usage, with plans for cloud syncing in the future
-- Python backend written from scratch
-
 ## Technologies Used
 
 The project uses the following core technologies:
