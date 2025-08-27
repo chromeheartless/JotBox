@@ -16,7 +16,9 @@ The project uses the following core technologies:
 - JavaScript (Vanilla) for interactive behavior
 - Custom Fonts for typography
 - Python for backend logic
+  
   This project will use the FlatFile data management engine written by me.
+  
   [FlatFile](https://github.com/chromeheartless/FlatFile)
 - GitHub for version control and hosting 
 
