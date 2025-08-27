@@ -1,546 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JotBox</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" href="logo.png" type="image/x-icon" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Jetbrains Mono";
-      background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      overflow-x: hidden;
-      overflow-y: hidden;
-      transition: background-color 0.4s, color 0.4s;
-      align-items: center;
-      justify-content: flex-start;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JotBox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="img/logo.png" type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    .header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      z-index: 10;
-      animation: fadeInFromTop 1s ease-out forwards;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Jetbrains Mono";
+            background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            transition: background-color 0.4s, color 0.4s;
+            align-items: center;
+            justify-content: flex-start;
+        }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 10;
+            animation: fadeInFromTop 1s ease-out forwards;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
 
-    .brand {
-      font-weight: normal;
-      font-size: 1.2rem;
-      color: white;
-      text-shadow: 0 0 1px white;
-    }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    .page-container {
-      flex: 1 1 auto;
-      padding: 120px 20px 40px;
-      max-width: 700px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 0; /* Allow shrinking */
-    }
+        .brand {
+            font-weight: normal;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 0 0 1px white;
+        }
 
-    .hero, .form-container {
-      width: 100%;
-      max-width: 700px;
-      text-align: center;
-      margin-bottom: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+        .page-container {
+            flex: 1 1 auto;
+            padding: 120px 20px 40px;
+            max-width: 700px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            /* Allow shrinking */
+        }
 
-    .title {
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 700;
-      margin: 0 0 0.5rem;
-      color: white;
-      animation: fadeSlideIn 1s ease-out forwards;
-    }
+        .hero,
+        .form-container {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .subtitle, .subtitle2 {
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 700;
-      margin: 0 0 1rem;
-      color: white;
-      animation: fadeSlideIn 1s ease-out forwards;
-      animation-delay: 0.3s;
-    }
+        .title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+            color: white;
+            animation: fadeSlideIn 1s ease-out forwards;
+        }
 
-    
-    .subtitle-container {
-      display: flex; /* Use flexbox to align items */
-      align-items: center; /* Center items vertically */
-      white-space: nowrap; /* Prevent text from wrapping */
-    }
+        .subtitle,
+        .subtitle2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin: 0 0 1rem;
+            color: white;
+            animation: fadeSlideIn 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
 
 
-    .description {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: rgba(255 255 255 / 0.8);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      max-width: 700px;
-      animation: fadeSlideIn 1s ease-out forwards;
-      animation-delay: 0.6s;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeSlideIn 1s ease-out forwards;
-      animation-delay: 0.9s;
-    }
-
-    .hero-buttons button,
-    .hero-buttons a {
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      font-family: "Jetbrains Mono";
-      border: none;
-      min-width: 140px;
-      text-align: center;
-      text-decoration: none;
-      user-select: none;
-      transition: background-color 0.3s;
-      display: inline-block;
-      line-height: 1.2;
-    }
-
-    .get-started {
-      background-color: white;
-      color: black;
-    }
-
-    .get-started:hover {
-      background-color: #d6faff;
-    }
-
-    .wiki-btn {
-      background-color: transparent;
-      border: 2px solid white;
-      color: white;
-    }
-
-    .wiki-btn:hover {
-      background-color: white;
-      color: black;
-    }
-
-    .form-container {
-      display: none;
-      background-color: rgba(255 255 255 / 0.06);
-      padding: 2rem 3rem;
-      border-radius: 1rem;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0 0 0 / 0.2);
-      animation-fill-mode: forwards;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .back-btn {
-      align-self: flex-start;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: "Jetbrains Mono";
-      text-decoration: underline;
-    }
-
-    .form-container h2 {
-      color: white;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-container form {
-      width: 100%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .form-container input {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: "Jetbrains Mono";
-    }
-
-    .form-container input::placeholder {
-      color: #888;
-    }
-
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .button-group button {
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: "Jetbrains Mono";
-      border: none;
-      min-width: 110px;
-      text-align: center;
-      user-select: none;
-      transition: background-color 0.3s;
-      color: white;
-      background-color: transparent;
-      border: 2px solid white;
-      line-height: 1.2;
-    }
-
-    .signup-btn {
-      background-color: #833AB4;
-      color: white;
-      border: none;
-      min-width: 130px;
-    }
-
-    .signup-btn:hover {
-      background-color: #9626c1;
-    }
-
-    .login-btn:hover {
-      background-color: white;
-      color: black;
-    }
-
-    .footer {
-      font-family: "Jetbrains Mono";
-      text-align: center;
-      padding: clamp(0.5rem, 2vw, 1.5rem) 0;
-      color: white;
-      margin-top: auto;
-      background: transparent;
-      user-select: none;
-      width: 100%;
-      max-width: 100vw;
-      box-sizing: border-box;
-      font-size: clamp(0.9rem, 2vw, 1.2rem);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .footer.animate-in {
-      animation: fadeInFromBottom 1s ease-out forwards;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    #hero, #form {
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    .title, .subtitle, .subtitle2, .description, .hero-buttons {
-      opacity: 0;
-      pointer-events: none;
-    }
+        .subtitle-container {
+            display: flex;
+            /* Use flexbox to align items */
+            align-items: center;
+            /* Center items vertically */
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+        }
 
 
-    .animate-in {
-      animation: fadeSlideIn 1s ease-out forwards;
-      opacity: 1;
-      pointer-events: auto;
-    }
+        .description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255 255 255 / 0.8);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            animation: fadeSlideIn 1s ease-out forwards;
+            animation-delay: 0.6s;
+        }
 
-    @keyframes fadeSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeSlideIn 1s ease-out forwards;
+            animation-delay: 0.9s;
+        }
 
-    @keyframes fadeInFromTop {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .hero-buttons button,
+        .hero-buttons a {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: "Jetbrains Mono";
+            border: none;
+            min-width: 140px;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            transition: background-color 0.3s;
+            display: inline-block;
+            line-height: 1.2;
+        }
 
-    @keyframes fadeInFromBottom {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .get-started {
+            background-color: white;
+            color: black;
+        }
 
-    @keyframes slideUpHide {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(-40px);
-      }
-    }
+        .get-started:hover {
+            background-color: #d6faff;
+        }
 
-    @keyframes slideUpShow {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .wiki-btn {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
 
-    @media (max-width: 768px) {
-      .page-container {
-        padding: 120px 15px 30px;
-      }
+        .wiki-btn:hover {
+            background-color: white;
+            color: black;
+        }
 
-      .hero-buttons {
-        flex-direction: column;
-      }
+        .form-container {
+            display: none;
+            background-color: rgba(255 255 255 / 0.06);
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0 0 0 / 0.2);
+            animation-fill-mode: forwards;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
 
-      .button-group {
-        flex-direction: column;
-        gap: 0.8rem;
-      }
+        .back-btn {
+            align-self: flex-start;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: "Jetbrains Mono";
+            text-decoration: underline;
+        }
 
-      .button-group button {
-        width: 100%;
-        min-width: auto;
-      }
+        .form-container h2 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
 
-      .hero-buttons button,
-      .hero-buttons a {
-        width: 100%;
-        min-width: auto;
-      }
-    }
-  </style>
+        .form-container form {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: "Jetbrains Mono";
+        }
+
+        .form-container input::placeholder {
+            color: #888;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: "Jetbrains Mono";
+            border: none;
+            min-width: 110px;
+            text-align: center;
+            user-select: none;
+            transition: background-color 0.3s;
+            color: white;
+            background-color: transparent;
+            border: 2px solid white;
+            line-height: 1.2;
+        }
+
+        .signup-btn {
+            background-color: #833AB4;
+            color: white;
+            border: none;
+            min-width: 130px;
+        }
+
+        .signup-btn:hover {
+            background-color: #9626c1;
+        }
+
+        .login-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .footer {
+            font-family: "Jetbrains Mono";
+            text-align: center;
+            padding: clamp(0.5rem, 2vw, 1.5rem) 0;
+            color: white;
+            margin-top: auto;
+            background: transparent;
+            user-select: none;
+            width: 100%;
+            max-width: 100vw;
+            box-sizing: border-box;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .footer.animate-in {
+            animation: fadeInFromBottom 1s ease-out forwards;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #hero,
+        #form {
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .title,
+        .subtitle,
+        .subtitle2,
+        .description,
+        .hero-buttons {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        .animate-in {
+            animation: fadeSlideIn 1s ease-out forwards;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpHide {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+        }
+
+        @keyframes slideUpShow {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 120px 15px 30px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .button-group button {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .hero-buttons button,
+            .hero-buttons a {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: auto;
+            opacity: 0;
+            animation: fadeInOverlay 0.5s forwards;
+        }
+
+        .overlay-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem; /* space between text and button */
+        }
+
+        .overlay-content p {
+            margin: 0;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: white;
+        }
+
+        .overlay-content a.wiki-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            border: 2px solid white;
+            background-color: transparent;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: "Jetbrains Mono";
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .overlay-content a.wiki-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+
+    </style>
 </head>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZX5V4Z77F3"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-ZX5V4Z77F3');
+    gtag('config', 'G-ZX5V4Z77F3');
 </script>
 
 <body>
-  <nav class="header">
-    <div class="logo-container">
-      <img src="logo.png" alt="JotBox Logo" width="50" height="40" />
-      <span class="brand">JotBox</span>
-    </div>
-  </nav>
+    <nav class="header">
+        <div class="logo-container">
+            <img src="img/logo.png" alt="JotBox Logo" width="50" height="40" />
+            <span class="brand">JotBox</span>
+        </div>
+    </nav>
 
-  <div class="page-container">
-    <section class="hero" id="hero">
-      <h1 class="title">Modern Notes App</h1>
-      <div class="subtitle-container">
-        <h2 class="subtitle">With the&nbsp;</h2>
-        <h2 class="subtitle2"></h2>
-      </div>
-      <p class="description">JotBox is a simple, intuitive notes app made by students, for students.</p>
-      <div class="hero-buttons">
-        <button class="get-started" id="getStartedBtn">Get Started</button>
+    <div class="page-container">
+        <section class="hero" id="hero">
+            <h1 class="title">Modern Notes App</h1>
+            <div class="subtitle-container">
+                <h2 class="subtitle">With the&nbsp;</h2>
+                <h2 class="subtitle2"></h2>
+            </div>
+            <p class="description">JotBox is a simple, intuitive notes app made by students, for students.</p>
+            <div class="hero-buttons">
+                <button class="get-started" id="getStartedBtn">Get Started</button>
+                <a href="https://github.com/chromeheartless/JotBox" target="_blank" rel="noopener noreferrer" class="wiki-btn">Read Docs</a>
+            </div>
+        </section>
+
+        <section class="form-container" id="form">
+            <button class="back-btn" id="backBtn">← Back</button>
+            <h2>Get started with JotBox</h2>
+            <form id="signupForm">
+                <input type="text" name="username" placeholder="Username" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <div class="button-group">
+                    <button type="submit" class="login-btn">Login</button>
+                    <button type="submit" class="signup-btn">Sign Up</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    
+    <div id="comingSoonOverlay" class="overlay">
+      <div class="overlay-content">
+        <p>Coming Soon, feel free to read our docs</p>
         <a href="https://github.com/chromeheartless/JotBox" target="_blank" rel="noopener noreferrer" class="wiki-btn">Read Docs</a>
       </div>
-    </section>
-
-    <section class="form-container" id="form">
-      <button class="back-btn" id="backBtn">← Back</button>
-      <h2>Get started with JotBox</h2>
-      <form id="signupForm">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <div class="button-group">
-          <button type="submit" class="login-btn">Login</button>
-          <button type="submit" class="signup-btn">Sign Up</button>
-        </div>
-      </form>
-    </section>
-  </div>
-
-  <footer class="footer">
-    <p>&copy; 2025 JotBox under the MIT license</p>
-  </footer>
-
-  <script>
-    const hero = document.getElementById('hero');
-    const form = document.getElementById('form');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-    const backBtn = document.getElementById('backBtn');
-    const signupForm = document.getElementById('signupForm');
-
-    const textElement = document.querySelector('.subtitle2');
-    const phrases = [
-      "looks.",
-      "feel.",
-      "style.",
-      "functionality.",
-      "ease.",
-      "simplicity.",
-      "creativity.",
-      "efficiency.",
-      "innovation.",
-      "clarity.",
-      "flexibility.",
-      "intuitiveness.",
-      "accessibility.",
-      "organization.",
-      "productivity.",
-      "customization.",
-      "collaboration.",
-      "inspiration.",
-      "versatility.",
-      "performance."
-    ];
-    let currentPhraseIndex = 0;
-    let currentCharIndex = 0;
-    let isDeleting = false;
+    </div>
 
 
-function type() {
-    const currentPhrase = phrases[currentPhraseIndex];
-    const typedText = currentPhrase.slice(0, currentCharIndex);
-    textElement.innerHTML = typedText + '<span class="cursor">_</span>'; // Add underscore
+    <footer class="footer">
+        <p>&copy; 2025 JotBox under the MIT license</p>
+    </footer>
 
-    if (isDeleting) {
-        currentCharIndex--;
-        if (currentCharIndex < 0) {
-            isDeleting = false;
-            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-            currentCharIndex = 0;
-        }
-    } else {
-        currentCharIndex++;
-        if (currentCharIndex === currentPhrase.length) {
-            isDeleting = true;
-        }
-    }
-
-    const typingSpeed = isDeleting ? 200 : 200; // Adjust speed here
-    setTimeout(type, typingSpeed);
-}
-
-    getStartedBtn.addEventListener('click', () => {
-      hero.style.animation = 'slideUpHide 0.5s forwards';
-      hero.style.pointerEvents = 'none';
-      setTimeout(() => {
-        hero.style.visibility = 'hidden';
-        hero.style.display = 'none';
-        form.style.display = 'flex';
-        form.style.visibility = 'visible';
-        form.style.pointerEvents = 'auto';
-        form.style.animation = 'slideUpShow 0.5s forwards';
-      }, 500);
-    });
-
-    backBtn.addEventListener('click', () => {
-      form.style.animation = 'slideUpHide 0.5s forwards';
-      form.style.pointerEvents = 'none';
-      setTimeout(() => {
-        form.style.visibility = 'hidden';
-        form.style.display = 'none';
-        hero.style.display = 'flex';
-        hero.style.visibility = 'visible';
-        hero.style.pointerEvents = 'auto';
-        hero.style.animation = 'slideUpShow 0.5s forwards';
-      }, 500);
-    });
-
-    signupForm.addEventListener('submit', e => {
-      e.preventDefault();
-      alert('Form submitted');
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const title = document.querySelector('.title');
-      const subtitle = document.querySelector('.subtitle');
-      const subtitle2 = document.querySelector('.subtitle2');
-      const description = document.querySelector('.description');
-      const heroButtons = document.querySelector('.hero-buttons');
-      const footer = document.querySelector('.footer');
-
-      setTimeout(() => {
-        title.classList.add('animate-in');
-        setTimeout(() => {
-          subtitle.classList.add('animate-in');
-          subtitle2.classList.add('animate-in');
-          setTimeout(() => {
-            description.classList.add('animate-in');
-            setTimeout(() => {
-              heroButtons.classList.add('animate-in');
-              setTimeout(() => {
-                footer.classList.add('animate-in');
-              }, 0); // delay for footer
-            }, 300); // delay for buttons
-          }, 300); // delay for description
-        }, 1000); // delay for subtitle
-      }, 100); // initial delay for title
-    });
-
-    type()
-  </script>
+    <script src="js/visual2.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        type()
+    </script>
 </body>
+
 </html>
